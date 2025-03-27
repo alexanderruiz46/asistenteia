@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aloxter - Tu asistente virtual experto en tecnología y programación. Obtén ayuda con desarrollo web, backend, bases de datos y más.">
+    <title>Aloxter - Asistente Virtual de Tecnología</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+      /* ... estilos existentes ... */
+      
+      .message {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        display: none;
+      }
+      
+      .error-message {
+        background-color: #ffebee;
+        color: #c62828;
+        border: 1px solid #ef9a9a;
+      }
+      
+      .success-message {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        border: 1px solid #a5d6a7;
+      }
+      
+      .loading {
+        opacity: 0.7;
+        font-style: italic;
+      }
+      
+      .model-info {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid #eee;
+        font-size: 0.8em;
+        color: #666;
+      }
+      
+      .bot-message {
+        background-color: #f5f5f5;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 10px;
+        max-width: 80%;
+      }
+      
+      .user-message {
+        background-color: #e3f2fd;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 10px;
+        max-width: 80%;
+        margin-left: auto;
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+    <div class="background-animation"></div>
+    
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+      <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="relative">
+            <div class="logo-container">
+              <img src="favicon.svg" alt="Aloxter Logo" class="w-12 h-12 animate-pulse-slow">
+              <div class="logo-glow"></div>
+            </div>
+            <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white animate-pulse"></div>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">Aloxter</h1>
+            <p class="text-sm text-gray-500">Tu asistente virtual experto en tecnología</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container mx-auto px-4 pt-24 pb-16">
+      <div class="max-w-4xl mx-auto">
+        <div class="chat-container">
+          <div id="error-message" class="message-container error hidden"></div>
+          <div id="success-message" class="message-container success hidden"></div>
+          <div id="chat-messages" class="space-y-4 mb-6 max-h-[60vh] overflow-y-auto">
+            <div class="assistant-message">
+              <div class="flex items-start space-x-3">
+                <div class="flex-shrink-0">
+                  <div class="avatar-container">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center shadow-lg animate-float">
+                      <i class="fas fa-robot text-white text-2xl"></i>
+                    </div>
+                    <div class="avatar-glow"></div>
+                  </div>
+                </div>
+                <div class="flex-grow">
+                  <p class="text-gray-800 text-lg">¡Hola! Soy Aloxter, tu asistente virtual especializado en tecnología y programación. ¿En qué puedo ayudarte hoy?</p>
+                  <div class="mt-4 flex flex-wrap gap-3">
+                    <button class="sugerencia-btn">
+                      <i class="fab fa-js"></i>
+                      <span>¿Cómo puedo aprender JavaScript?</span>
+                    </button>
+                    <button class="sugerencia-btn">
+                      <i class="fab fa-react"></i>
+                      <span>¿Qué es React?</span>
+                    </button>
+                    <button class="sugerencia-btn">
+                      <i class="fas fa-database"></i>
+                      <span>¿Cómo funciona Firebase?</span>
+                    </button>
+                    <button class="sugerencia-btn">
+                      <i class="fas fa-code"></i>
+                      <span>¿Qué es el desarrollo web?</span>
+                    </button>
+                  </div>
+                  <div class="model-info">
+                    <i class="fas fa-robot"></i>
+                    <span>Modelo: GPT-3.5 Turbo</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="loading" class="hidden">
+            <div class="loading-container">
+              <div class="loading-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+              </div>
+            </div>
+          </div>
+
+          <form id="chat-form" class="chat-input-container">
+            <input type="text" id="user-input" placeholder="Escribe tu mensaje aquí..." class="chat-input">
+            <button type="submit" class="send-button">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <footer class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-gray-100">
+      <div class="container mx-auto px-4 py-3 text-center text-sm text-gray-600">
+        <p>&copy; 2024 Aloxter. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

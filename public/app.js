@@ -1,0 +1,221 @@
+// Configuración de la API
+const API_URL = 'https://us-central1-asistenteia-185c4.cloudfunctions.net/api';
+
+// Elementos del DOM
+const chatMessages = document.getElementById('chat-messages');
+const chatForm = document.getElementById('chat-form');
+const userInput = document.getElementById('user-input');
+const loadingIndicator = document.getElementById('loading');
+
+// Estado del chat
+let mensajesAnteriores = [];
+
+// Funciones auxiliares
+function mostrarCargando() {
+    loadingIndicator.classList.remove('hidden');
+}
+
+function ocultarCargando() {
+    loadingIndicator.classList.add('hidden');
+}
+
+function agregarMensaje(mensaje, esUsuario = false) {
+    const mensajeDiv = document.createElement('div');
+    mensajeDiv.className = `flex items-start space-x-3 message ${esUsuario ? 'flex-row-reverse space-x-reverse' : ''}`;
+
+    const avatarDiv = document.createElement('div');
+    avatarDiv.className = 'flex-shrink-0';
+    avatarDiv.innerHTML = `
+        <div class="w-8 h-8 rounded-full ${esUsuario ? 'bg-gray-300' : 'bg-gradient-to-r from-blue-500 to-blue-600'} flex items-center justify-center">
+            ${esUsuario ? '<i class="fas fa-user text-white"></i>' : '<img src="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%232196f3\'/%3E%3Cpath d=\'M50 20 L80 80 L20 80 Z\' fill=\'white\'/%3E%3C/svg%3E" alt="Logo Aloxter" class="w-6 h-6">'}
+        </div>
+    `;
+
+    const contenidoDiv = document.createElement('div');
+    contenidoDiv.className = `flex-grow ${esUsuario ? 'text-right' : ''}`;
+    
+    const mensajeBurbuja = document.createElement('div');
+    mensajeBurbuja.className = `rounded-lg p-3 ${esUsuario ? 'user-message' : 'assistant-message'}`;
+    mensajeBurbuja.innerHTML = `<p>${mensaje}</p>`;
+
+    contenidoDiv.appendChild(mensajeBurbuja);
+    mensajeDiv.appendChild(avatarDiv);
+    mensajeDiv.appendChild(contenidoDiv);
+    chatMessages.appendChild(mensajeDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function agregarSugerencias(sugerencias) {
+    const sugerenciasDiv = document.createElement('div');
+    sugerenciasDiv.className = 'mt-2 flex flex-wrap gap-2';
+    
+    sugerencias.forEach(sugerencia => {
+        const boton = document.createElement('button');
+        boton.className = 'sugerencia-btn px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm hover:bg-blue-200 transition-colors';
+        boton.textContent = sugerencia;
+        boton.onclick = () => {
+            userInput.value = sugerencia;
+            chatForm.dispatchEvent(new Event('submit'));
+        };
+        sugerenciasDiv.appendChild(boton);
+    });
+
+    const ultimoMensaje = chatMessages.lastElementChild;
+    if (ultimoMensaje) {
+        const contenidoDiv = ultimoMensaje.querySelector('.flex-grow');
+        contenidoDiv.appendChild(sugerenciasDiv);
+    }
+}
+
+// Función para mostrar mensajes de error
+function mostrarError(mensaje) {
+    const errorDiv = document.getElementById('error-message');
+    if (errorDiv) {
+        errorDiv.textContent = mensaje;
+        errorDiv.classList.remove('hidden');
+        setTimeout(() => {
+            errorDiv.classList.add('hidden');
+        }, 5000);
+    }
+}
+
+// Función para mostrar mensajes de éxito
+function mostrarExito(mensaje) {
+    const successDiv = document.getElementById('success-message');
+    if (successDiv) {
+        successDiv.textContent = mensaje;
+        successDiv.classList.remove('hidden');
+        setTimeout(() => {
+            successDiv.classList.add('hidden');
+        }, 5000);
+    }
+}
+
+// Función para procesar la respuesta
+async function procesarRespuesta(response) {
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || `Error HTTP: ${response.status}`);
+    }
+    return response.json();
+}
+
+// Función para enviar mensaje al chat
+async function enviarMensaje(mensaje) {
+    try {
+        const response = await fetch(`${API_URL}/chat`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            mode: 'cors',
+            credentials: 'omit',
+            body: JSON.stringify({ message: mensaje })
+        });
+
+        const data = await procesarRespuesta(response);
+        return {
+            text: data.response,
+            model: data.model,
+            version: data.version
+        };
+    } catch (error) {
+        console.error('Error completo:', error);
+        throw error;
+    }
+}
+
+// Función para manejar el envío del formulario
+chatForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const mensajeInput = document.getElementById('user-input');
+    const mensaje = mensajeInput.value.trim();
+    
+    if (!mensaje) {
+        mostrarError('Por favor, escribe un mensaje');
+        return;
+    }
+
+    try {
+        // Mostrar mensaje del usuario
+        const chatBox = document.getElementById('chat-messages');
+        const userMessage = document.createElement('div');
+        userMessage.className = 'user-message';
+        userMessage.textContent = mensaje;
+        chatBox.appendChild(userMessage);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Limpiar input
+        mensajeInput.value = '';
+
+        // Mostrar indicador de carga
+        const loadingMessage = document.createElement('div');
+        loadingMessage.className = 'bot-message loading';
+        loadingMessage.textContent = 'Pensando...';
+        chatBox.appendChild(loadingMessage);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Obtener respuesta
+        const respuesta = await enviarMensaje(mensaje);
+
+        // Remover indicador de carga
+        loadingMessage.remove();
+
+        // Mostrar respuesta
+        const botMessage = document.createElement('div');
+        botMessage.className = 'bot-message';
+        botMessage.innerHTML = `
+            ${respuesta.text}
+            <div class="model-info">
+                <small>Modelo: ${respuesta.model} | Versión: ${respuesta.version}</small>
+            </div>
+        `;
+        chatBox.appendChild(botMessage);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        mostrarExito('Mensaje enviado correctamente');
+    } catch (error) {
+        console.error('Error al enviar mensaje:', error);
+        mostrarError(error.message || 'Error al enviar el mensaje. Por favor, intenta de nuevo.');
+    }
+});
+
+// Verificar el estado de la API al cargar la página
+async function verificarAPI() {
+    try {
+        const response = await fetch(`${API_URL}/health`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            },
+            mode: 'cors',
+            credentials: 'omit'
+        });
+        const data = await procesarRespuesta(response);
+        console.log('Estado de la API:', data);
+    } catch (error) {
+        console.error('Error al verificar la API:', error);
+        mostrarError('Error al conectar con el servidor. Por favor, recarga la página.');
+    }
+}
+
+// Verificar API al cargar la página
+verificarAPI();
+
+// Manejar sugerencias iniciales
+document.querySelectorAll('.sugerencia-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        userInput.value = btn.textContent;
+        chatForm.dispatchEvent(new Event('submit'));
+    });
+});
+
+// Manejar tecla Enter
+userInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        chatForm.dispatchEvent(new Event('submit'));
+    }
+}); 

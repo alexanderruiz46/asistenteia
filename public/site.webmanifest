@@ -1,0 +1,16 @@
+{
+    "name": "Aloxter - Asistente Virtual de Tecnología",
+    "short_name": "Aloxter",
+    "description": "Tu asistente virtual experto en tecnología y programación",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#2196f3",
+    "icons": [
+        {
+            "src": "favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+} 
