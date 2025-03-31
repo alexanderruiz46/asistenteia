@@ -111,6 +111,6 @@ jobs:
           echo "Verificando logs de Firebase Functions..."
           firebase functions:log --token "${{ secrets.FIREBASE_TOKEN }}"
           echo "Verificando logs de Firebase Hosting..."
-          firebase hosting:log --token "${{ secrets.FIREBASE_TOKEN }}"
+          firebase functions:log --only hosting --token "${{ secrets.FIREBASE_TOKEN }}"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} 

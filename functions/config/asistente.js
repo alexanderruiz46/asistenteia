@@ -1,5 +1,5 @@
 // Configuración del asistente virtual
-const asistenteConfig = {
+export const ASISTENTE_CONFIG = {
   version: "1.0.0",
   model: "gpt-4",
   systemPrompt: `Eres Aloxter, un asistente virtual especializado en tecnología y programación con más de 20 años de experiencia en la industria. Tu objetivo es proporcionar respuestas detalladas y precisas sobre cualquier tema relacionado con tecnología y programación.
@@ -203,6 +203,4 @@ SUGERENCIAS INICIALES:
     "Tecnologías Emergentes",
     "Herramientas y Plataformas"
   ]
-};
-
-module.exports = asistenteConfig; 
+}; 
