@@ -6,6 +6,7 @@ import express from 'express';
 import cors from 'cors';
 import OpenAI from 'openai';
 import { ASISTENTE_CONFIG } from './config/asistente.js';
+import { normalizeText } from './utils/textUtils.js';
 
 initializeApp();
 
@@ -36,6 +37,9 @@ app.post('/chat', async (req, res) => {
       });
     }
 
+    // Normalizar el texto del mensaje
+    const normalizedMessage = normalizeText(req.body.message);
+
     const openai = new OpenAI({
       apiKey: config().openai.key
     });
@@ -49,7 +53,7 @@ app.post('/chat', async (req, res) => {
         },
         {
           role: "user",
-          content: req.body.message
+          content: normalizedMessage
         }
       ],
       temperature: ASISTENTE_CONFIG.temperature,
@@ -77,7 +81,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({
     error: 'Error interno del servidor',
     message: err.message,
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
   });
 });
 
