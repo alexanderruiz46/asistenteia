@@ -1,76 +1,81 @@
-name: Firebase Deploy
+name: Deploy to Firebase
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: '20'
           cache: 'npm'
           
       - name: Install Dependencies
         run: |
-          npm install
-          cd functions && npm install && cd ..
+          npm ci
+          cd functions && npm ci
           
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+        
       - name: Deploy to Firebase
         run: |
-          npm install -g firebase-tools
-          firebase deploy --only hosting,functions --token "${{ secrets.FIREBASE_TOKEN }}"
+          # Función para verificar si el error es de cuota
+          check_quota_error() {
+            if [[ $1 == *"Quota exceeded"* ]]; then
+              return 0
+            fi
+            return 1
+          }
+          
+          # Intentar el despliegue hasta 3 veces
+          for i in {1..3}; do
+            echo "Intento de despliegue $i de 3..."
+            if firebase deploy --only hosting,functions --token "${{ secrets.FIREBASE_TOKEN }}" --non-interactive; then
+              echo "Despliegue exitoso en el intento $i"
+              exit 0
+            else
+              ERROR_CODE=$?
+              ERROR_MESSAGE=$(firebase deploy --only hosting,functions --token "${{ secrets.FIREBASE_TOKEN }}" --non-interactive 2>&1)
+              
+              if check_quota_error "$ERROR_MESSAGE"; then
+                echo "Error de cuota detectado. Esperando 120 segundos antes del siguiente intento..."
+                sleep 120
+              else
+                echo "Error no relacionado con cuota: $ERROR_MESSAGE"
+                exit $ERROR_CODE
+              fi
+            fi
+          done
+          
+          echo "Todos los intentos de despliegue fallaron"
+          exit 1
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           
       - name: Verify Deployment
         run: |
-          # Esperar a que el despliegue se complete
-          echo "Esperando 30 segundos para que el despliegue se complete..."
+          echo "Verificando despliegue..."
           sleep 30
+          curl -f https://us-central1-asistenteia-185c4.cloudfunctions.net/api/health || exit 1
+          curl -f https://asistenteia.web.app || exit 1
           
-          # Verificar la API con más información de diagnóstico
-          echo "Verificando la API..."
-          API_URL="https://us-central1-asistenteia-185c4.cloudfunctions.net/api/health"
-          
-          # Primera verificación con curl y headers
-          echo "Realizando primera verificación con curl..."
-          API_RESPONSE=$(curl -v -s -w "%{http_code}" -H "Accept: application/json" -H "Content-Type: application/json" "$API_URL")
-          HTTP_CODE=${API_RESPONSE: -3}
-          RESPONSE_BODY=${API_RESPONSE:0:${#API_RESPONSE}-3}
-          
-          echo "Código de estado HTTP: $HTTP_CODE"
-          echo "Respuesta del servidor: $RESPONSE_BODY"
-          
-          # Segunda verificación con wget para más detalles
-          echo "Realizando segunda verificación con wget..."
-          wget -qO- --header="Accept: application/json" --header="Content-Type: application/json" "$API_URL" || true
-          
-          # Verificar si la API está respondiendo
-          if [ "$HTTP_CODE" != "200" ]; then
-            echo "Error: API no está respondiendo correctamente"
-            echo "Código de estado: $HTTP_CODE"
-            echo "Respuesta: $RESPONSE_BODY"
-            echo "Verificando logs de Firebase Functions..."
-            firebase functions:log --only api --token "${{ secrets.FIREBASE_TOKEN }}" || true
-            exit 1
-          fi
-          
-          # Verificar el hosting
-          echo "Verificando el hosting..."
-          HOSTING_URL="https://asistenteia-185c4.web.app/test.html"
-          HOSTING_RESPONSE=$(curl -s -w "%{http_code}" "$HOSTING_URL")
-          HTTP_CODE=${HOSTING_RESPONSE: -3}
-          
-          if [ "$HTTP_CODE" != "200" ]; then
-            echo "Error: Hosting no está respondiendo correctamente"
-            echo "Código de estado: $HTTP_CODE"
-            echo "Verificando logs de Firebase Hosting..."
-            firebase hosting:log --token "${{ secrets.FIREBASE_TOKEN }}" || true
-            exit 1
-          fi
-          
-          echo "✅ Despliegue verificado exitosamente" 
+      - name: Check Logs
+        if: failure()
+        run: |
+          echo "Verificando logs de Firebase Functions..."
+          firebase functions:log --only errors --token "${{ secrets.FIREBASE_TOKEN }}"
+          echo "Verificando logs de Firebase Hosting..."
+          firebase hosting:log --only errors --token "${{ secrets.FIREBASE_TOKEN }}"
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} 
