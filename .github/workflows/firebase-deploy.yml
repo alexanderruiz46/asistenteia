@@ -73,13 +73,26 @@ jobs:
       - name: Verify Deployment
         run: |
           echo "Verificando despliegue..."
-          sleep 30
+          sleep 60
+          
+          # Función para verificar la API con reintentos
+          check_api() {
+            for i in {1..3}; do
+              echo "Verificando API (intento $i de 3)..."
+              API_RESPONSE=$(curl -s https://us-central1-asistenteia-185c4.cloudfunctions.net/health)
+              if [[ $API_RESPONSE == *"status"* ]]; then
+                echo "API está funcionando correctamente"
+                return 0
+              fi
+              echo "Esperando 30 segundos antes del siguiente intento..."
+              sleep 30
+            done
+            return 1
+          }
+          
           # Verificar la API
-          API_RESPONSE=$(curl -s https://us-central1-asistenteia-185c4.cloudfunctions.net/health)
-          if [[ $API_RESPONSE == *"status"* ]]; then
-            echo "API está funcionando correctamente"
-          else
-            echo "Error: API no está respondiendo correctamente"
+          if ! check_api; then
+            echo "Error: API no está respondiendo correctamente después de 3 intentos"
             exit 1
           fi
           
