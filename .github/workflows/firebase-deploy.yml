@@ -74,15 +74,30 @@ jobs:
         run: |
           echo "Verificando despliegue..."
           sleep 30
-          curl -f https://us-central1-asistenteia-185c4.cloudfunctions.net/api/health || exit 1
-          curl -f https://asistenteia.web.app || exit 1
+          # Verificar la API
+          API_RESPONSE=$(curl -s https://us-central1-asistenteia-185c4.cloudfunctions.net/health)
+          if [[ $API_RESPONSE == *"status"* ]]; then
+            echo "API está funcionando correctamente"
+          else
+            echo "Error: API no está respondiendo correctamente"
+            exit 1
+          fi
+          
+          # Verificar el hosting
+          HOSTING_RESPONSE=$(curl -s https://asistenteia.web.app)
+          if [[ $HOSTING_RESPONSE == *"<!DOCTYPE html>"* ]]; then
+            echo "Hosting está funcionando correctamente"
+          else
+            echo "Error: Hosting no está respondiendo correctamente"
+            exit 1
+          fi
           
       - name: Check Logs
         if: failure()
         run: |
           echo "Verificando logs de Firebase Functions..."
-          firebase functions:log --only errors --token "${{ secrets.FIREBASE_TOKEN }}"
+          firebase functions:log --token "${{ secrets.FIREBASE_TOKEN }}"
           echo "Verificando logs de Firebase Hosting..."
-          firebase hosting:log --only errors --token "${{ secrets.FIREBASE_TOKEN }}"
+          firebase hosting:log --token "${{ secrets.FIREBASE_TOKEN }}"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} 
