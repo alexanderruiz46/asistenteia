@@ -79,7 +79,7 @@ jobs:
           check_api() {
             for i in {1..3}; do
               echo "Verificando API (intento $i de 3)..."
-              API_RESPONSE=$(curl -s https://us-central1-asistenteia-185c4.cloudfunctions.net/health)
+              API_RESPONSE=$(curl -s https://us-central1-asistenteia-185c4.cloudfunctions.net/api/health)
               if [[ $API_RESPONSE == *"status"* ]]; then
                 echo "API está funcionando correctamente"
                 return 0
