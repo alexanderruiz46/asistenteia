@@ -97,7 +97,7 @@ jobs:
           fi
           
           # Verificar el hosting
-          HOSTING_RESPONSE=$(curl -s https://asistenteia.web.app)
+          HOSTING_RESPONSE=$(curl -s https://asistenteia-185c4.web.app)
           if [[ $HOSTING_RESPONSE == *"<!DOCTYPE html>"* ]]; then
             echo "Hosting está funcionando correctamente"
           else
