@@ -1,0 +1,97 @@
+openapi: 3.0.0
+info:
+  title: AsistenteIA API
+  description: API para el asistente virtual de inteligencia artificial
+  version: 1.0.0
+  contact:
+    name: Alexander Ruiz
+    email: alexanderruiz46@gmail.com
+    url: https://github.com/alexanderruiz46/asistenteia
+
+servers:
+  - url: https://us-central1-asistenteia-185c4.cloudfunctions.net
+    description: Servidor de producción
+
+paths:
+  /api/v1/asistenteia/chat:
+    post:
+      summary: Enviar mensaje al asistente
+      description: Envía un mensaje al asistente virtual y recibe una respuesta
+      tags:
+        - Chat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: Mensaje para el asistente
+                  example: "¿Qué es el desarrollo web?"
+      responses:
+        '200':
+          description: Respuesta exitosa
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    description: Respuesta del asistente
+                  model:
+                    type: string
+                    description: Modelo de IA utilizado
+                  version:
+                    type: string
+                    description: Versión del modelo
+        '400':
+          description: Error en la solicitud
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Mensaje de error
+
+  /api/v1/asistenteia/health:
+    get:
+      summary: Verificar estado del servicio
+      description: Verifica el estado de salud del servicio
+      tags:
+        - Health
+      responses:
+        '200':
+          description: Servicio funcionando correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado del servicio
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Fecha y hora de la verificación
+
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Mensaje de error
+      required:
+        - error
+
+security:
+  - apiKey: [] 
