@@ -61,6 +61,60 @@
         max-width: 80%;
         margin-left: auto;
       }
+
+      .voice-button {
+        background-color: #f0f0f0;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .voice-button:hover {
+        background-color: #e0e0e0;
+      }
+
+      .voice-button.recording {
+        background-color: #ff4444;
+        color: white;
+      }
+
+      .voice-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+        color: #666;
+        font-size: 0.9em;
+      }
+
+      .recording-indicator {
+        width: 12px;
+        height: 12px;
+        background-color: #ff4444;
+        border-radius: 50%;
+        animation: pulse 1.5s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 0.7;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
     </style>
   </head>
   <body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
@@ -140,10 +194,19 @@
           </div>
 
           <form id="chat-form" class="chat-input-container">
-            <input type="text" id="user-input" placeholder="Escribe tu mensaje aquí..." class="chat-input">
-            <button type="submit" class="send-button">
-              <i class="fas fa-paper-plane"></i>
-            </button>
+            <div class="flex items-center space-x-2">
+              <button type="button" id="voice-input-btn" class="voice-button" title="Activar micrófono">
+                <i class="fas fa-microphone"></i>
+              </button>
+              <input type="text" id="user-input" placeholder="Escribe tu mensaje aquí..." class="chat-input">
+              <button type="submit" class="send-button">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+            <div id="voice-status" class="voice-status hidden">
+              <span class="recording-indicator"></span>
+              <span>Escuchando...</span>
+            </div>
           </form>
         </div>
       </div>

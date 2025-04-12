@@ -6,6 +6,8 @@ const chatMessages = document.getElementById('chat-messages');
 const chatForm = document.getElementById('chat-form');
 const userInput = document.getElementById('user-input');
 const loadingIndicator = document.getElementById('loading');
+const errorMessage = document.getElementById('error-message');
+const successMessage = document.getElementById('success-message');
 
 // Estado del chat
 let mensajesAnteriores = [];
@@ -69,24 +71,22 @@ function agregarSugerencias(sugerencias) {
 
 // Función para mostrar mensajes de error
 function mostrarError(mensaje) {
-    const errorDiv = document.getElementById('error-message');
-    if (errorDiv) {
-        errorDiv.textContent = mensaje;
-        errorDiv.classList.remove('hidden');
+    if (errorMessage) {
+        errorMessage.textContent = mensaje;
+        errorMessage.classList.remove('hidden');
         setTimeout(() => {
-            errorDiv.classList.add('hidden');
+            errorMessage.classList.add('hidden');
         }, 5000);
     }
 }
 
 // Función para mostrar mensajes de éxito
 function mostrarExito(mensaje) {
-    const successDiv = document.getElementById('success-message');
-    if (successDiv) {
-        successDiv.textContent = mensaje;
-        successDiv.classList.remove('hidden');
+    if (successMessage) {
+        successMessage.textContent = mensaje;
+        successMessage.classList.remove('hidden');
         setTimeout(() => {
-            successDiv.classList.add('hidden');
+            successMessage.classList.add('hidden');
         }, 5000);
     }
 }
@@ -175,6 +175,11 @@ chatForm.addEventListener('submit', async (e) => {
         chatBox.appendChild(botMessage);
         chatBox.scrollTop = chatBox.scrollHeight;
 
+        // Reproducir la respuesta con voz
+        if (window.voiceAssistant) {
+            window.voiceAssistant.speak(respuesta.text);
+        }
+
         mostrarExito('Mensaje enviado correctamente');
     } catch (error) {
         console.error('Error al enviar mensaje:', error);
@@ -217,5 +222,77 @@ userInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
         chatForm.dispatchEvent(new Event('submit'));
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const chatForm = document.getElementById('chat-form');
+    const userInput = document.getElementById('user-input');
+    const chatMessages = document.getElementById('chat-messages');
+    const loadingIndicator = document.getElementById('loading');
+    const errorMessage = document.getElementById('error-message');
+    const successMessage = document.getElementById('success-message');
+
+    // Cargar el script de voz
+    const voiceScript = document.createElement('script');
+    voiceScript.src = 'voice.js';
+    document.head.appendChild(voiceScript);
+
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const message = userInput.value.trim();
+        if (!message) return;
+
+        // Agregar mensaje del usuario
+        addMessage(message, 'user');
+        userInput.value = '';
+        loadingIndicator.classList.remove('hidden');
+
+        try {
+            const response = await fetch('https://us-central1-asistenteia-185c4.cloudfunctions.net/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor');
+            }
+
+            const data = await response.json();
+            
+            // Agregar respuesta del asistente
+            addMessage(data.response, 'assistant');
+            
+            // Reproducir la respuesta con voz
+            if (window.voiceAssistant) {
+                window.voiceAssistant.speak(data.response);
+            }
+
+            successMessage.textContent = 'Mensaje enviado correctamente';
+            successMessage.classList.remove('hidden');
+            setTimeout(() => successMessage.classList.add('hidden'), 3000);
+        } catch (error) {
+            console.error('Error:', error);
+            errorMessage.textContent = 'Error al enviar el mensaje. Por favor, intenta nuevamente.';
+            errorMessage.classList.remove('hidden');
+            setTimeout(() => errorMessage.classList.add('hidden'), 3000);
+        } finally {
+            loadingIndicator.classList.add('hidden');
+        }
+    });
+
+    function addMessage(text, type) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `${type}-message`;
+        
+        const messageContent = document.createElement('p');
+        messageContent.textContent = text;
+        messageDiv.appendChild(messageContent);
+        
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 }); 
