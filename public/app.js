@@ -177,7 +177,11 @@ chatForm.addEventListener('submit', async (e) => {
 
         // Reproducir la respuesta con voz
         if (window.voiceAssistant) {
-            window.voiceAssistant.speak(respuesta.text);
+            // Dividir la respuesta en oraciones para una mejor pronunciación
+            const sentences = respuesta.text.split(/[.!?]+/).filter(s => s.trim().length > 0);
+            sentences.forEach(sentence => {
+                window.voiceAssistant.speak(sentence.trim());
+            });
         }
 
         mostrarExito('Mensaje enviado correctamente');
@@ -238,6 +242,12 @@ document.addEventListener('DOMContentLoaded', () => {
     voiceScript.src = 'voice.js';
     document.head.appendChild(voiceScript);
 
+    // Esperar a que el script de voz se cargue
+    voiceScript.onload = () => {
+        // Inicializar el asistente de voz
+        window.voiceAssistant = new VoiceAssistant();
+    };
+
     chatForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const message = userInput.value.trim();
@@ -268,7 +278,11 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Reproducir la respuesta con voz
             if (window.voiceAssistant) {
-                window.voiceAssistant.speak(data.response);
+                // Dividir la respuesta en oraciones para una mejor pronunciación
+                const sentences = data.response.split(/[.!?]+/).filter(s => s.trim().length > 0);
+                sentences.forEach(sentence => {
+                    window.voiceAssistant.speak(sentence.trim());
+                });
             }
 
             successMessage.textContent = 'Mensaje enviado correctamente';
@@ -295,4 +309,13 @@ document.addEventListener('DOMContentLoaded', () => {
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
+
+    // Agregar eventos a los botones de sugerencia
+    document.querySelectorAll('.sugerencia-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const question = btn.querySelector('span').textContent;
+            userInput.value = question;
+            chatForm.dispatchEvent(new Event('submit'));
+        });
+    });
 }); 
