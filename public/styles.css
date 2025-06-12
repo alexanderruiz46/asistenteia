@@ -503,4 +503,62 @@ button:hover {
 
 .message-container.hidden {
     display: none;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 8px;
+        max-width: 100vw;
+    }
+    .chat-container {
+        border-radius: 8px;
+        padding: 0.5rem;
+        box-shadow: none;
+    }
+    .assistant-message, .user-message {
+        padding: 0.75rem;
+        font-size: 0.95rem;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .chat-input-container {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+    .chat-input {
+        font-size: 0.95rem;
+        padding: 0.75rem;
+    }
+    .send-button, .voice-button {
+        padding: 0.75rem;
+        font-size: 1rem;
+    }
+    .sugerencia-btn {
+        width: 100%;
+        font-size: 0.95rem;
+        padding: 0.5rem 0.75rem;
+    }
+    .footer {
+        font-size: 0.7rem;
+        padding: 0.5rem 0;
+    }
+}
+
+@media (max-width: 375px) {
+    .container {
+        padding: 2px;
+    }
+    .chat-input {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+    .send-button, .voice-button {
+        padding: 0.5rem;
+        font-size: 0.95rem;
+    }
+    .sugerencia-btn {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.5rem;
+    }
 } 
