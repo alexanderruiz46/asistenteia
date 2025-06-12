@@ -69,35 +69,27 @@ class VoiceAssistant {
 
   speak(text) {
     if (this.synthesis) {
-      // Cancelar cualquier síntesis en curso
       this.synthesis.cancel();
-
-      const utterance = new SpeechSynthesisUtterance(text);
+      // Solo leer la primera oración hasta el primer punto
+      const primerPunto = text.indexOf('.') !== -1 ? text.indexOf('.') + 1 : text.length;
+      const textoALeer = text.slice(0, primerPunto).trim();
+      const utterance = new SpeechSynthesisUtterance(textoALeer);
       utterance.lang = 'es-ES';
-      
-      // Usar la voz en español si está disponible
       if (this.spanishVoice) {
         utterance.voice = this.spanishVoice;
       }
-      
-      // Configurar la voz para que suene más natural
       utterance.rate = 1.0;
       utterance.pitch = 1.0;
       utterance.volume = 1.0;
-
-      // Agregar eventos para mejor control
       utterance.onstart = () => {
         console.log('Iniciando síntesis de voz');
       };
-
       utterance.onend = () => {
         console.log('Finalizando síntesis de voz');
       };
-
       utterance.onerror = (event) => {
         console.error('Error en la síntesis de voz:', event);
       };
-
       this.synthesis.speak(utterance);
     }
   }
