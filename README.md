@@ -148,4 +148,4 @@ Este proyecto está en desarrollo activo. Las nuevas características y mejoras 
 
 ---
 
-Hecho con ❤️ por Alexander Ruiz
+© 2026 Aloxter. Todos los derechos reservados. Hecho con ❤️ por Alexander Ruiz
