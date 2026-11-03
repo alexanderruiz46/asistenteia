@@ -55,7 +55,7 @@ jobs:
       - name: Verify health (push only)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          set -euo pipefail
+          set -eu
           for i in 1 2 3 4 5; do
             echo "Verificando API (intento $i)..."
             API_RESPONSE=$(curl -sS https://us-central1-asistenteia-185c4.cloudfunctions.net/api/health || true)
@@ -69,11 +69,12 @@ jobs:
               exit 1
             fi
           done
-          HOSTING_RESPONSE=$(curl -sS https://asistenteia-185c4.web.app | head -c 200)
-          if [[ "$HOSTING_RESPONSE" == *"<!DOCTYPE html>"* ]] || [[ "$HOSTING_RESPONSE" == *"<!doctype html>"* ]]; then
+          HOSTING_RESPONSE=$(curl -sS -L https://asistenteia-185c4.web.app || true)
+          if echo "$HOSTING_RESPONSE" | grep -qi '<!DOCTYPE html>'; then
             echo "Hosting OK"
           else
             echo "Hosting no responde correctamente"
+            echo "$HOSTING_RESPONSE" | head -c 300
             exit 1
           fi
 
