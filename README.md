@@ -5,7 +5,7 @@ Aloxter es una aplicación web moderna que implementa un asistente virtual intel
 ## 🌟 Características Principales
 
 - **Interfaz de Usuario Moderna**: Diseñada con React y Tailwind CSS
-- **Procesamiento de Lenguaje Natural**: Integración con OpenAI GPT-4o mini
+- **Procesamiento de Lenguaje Natural**: Integración con OpenAI GPT-6.1 Sol
 - **Backend Serverless**: Implementado con Firebase Cloud Functions
 - **Diseño Responsivo**: Adaptable a todos los dispositivos
 - **Normalización de Caracteres**: Manejo automático de caracteres especiales
@@ -23,7 +23,7 @@ Aloxter es una aplicación web moderna que implementa un asistente virtual intel
 
 - **Backend**:
   - Firebase Cloud Functions
-  - OpenAI API (GPT-4o mini)
+  - OpenAI API (GPT-6.1 Sol)
 
 - **Herramientas de Desarrollo**:
   - TypeScript

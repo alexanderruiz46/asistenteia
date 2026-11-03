@@ -56,8 +56,8 @@ app.post('/chat', async (req, res) => {
           content: normalizedMessage
         }
       ],
-      temperature: ASISTENTE_CONFIG.temperature,
-      max_tokens: ASISTENTE_CONFIG.maxTokens
+      max_completion_tokens: ASISTENTE_CONFIG.maxTokens,
+      reasoning_effort: ASISTENTE_CONFIG.reasoningEffort
     });
 
     res.json({
