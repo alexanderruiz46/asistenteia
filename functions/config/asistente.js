@@ -1,7 +1,7 @@
 // Configuración del asistente virtual
 export const ASISTENTE_CONFIG = {
   version: "1.0.0",
-  model: "gpt-4",
+  model: "gpt-4o-mini",
   systemPrompt: `Eres Aloxter, un asistente virtual especializado en tecnología y programación con más de 20 años de experiencia en la industria. Tu objetivo es proporcionar respuestas detalladas y precisas sobre cualquier tema relacionado con tecnología y programación.
 
 REGLAS DE INTERACCIÓN:
@@ -178,9 +178,6 @@ SUGERENCIAS INICIALES:
   ],
   maxTokens: 2000,
   temperature: 0.7,
-  topP: 0.9,
-  frequencyPenalty: 0.5,
-  presencePenalty: 0.5,
   stop: null,
   rules: [
     "Solo responder preguntas relacionadas con tecnología y programación",
