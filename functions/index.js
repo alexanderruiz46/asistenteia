@@ -87,3 +87,4 @@ app.use((err, req, res, next) => {
 
 // Exportar la aplicación Express como una Cloud Function
 export const api = onRequest(app);
+
