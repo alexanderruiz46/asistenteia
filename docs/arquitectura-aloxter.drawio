@@ -103,21 +103,42 @@
           <mxGeometry x="1090" y="40" width="200" height="100" as="geometry" />
         </mxCell>
 
-        <!-- FLECHAS PRINCIPALES -->
-        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1565c0;" edge="1" parent="1" source="c-url" target="f-html">
+        <!-- FLECHAS: anclajes + waypoints para que no se monten -->
+        <mxCell id="e1" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=40;html=1;strokeWidth=2;strokeColor=#1565c0;exitX=0.12;exitY=1;exitDx=0;exitDy=0;entryX=0.12;entryY=0;entryDx=0;entryDy=0;fontSize=10;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="swim-client" target="swim-front">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e2" value="HTTPS fetch&#xa;/api/chat" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2e7d32;fontSize=10;" edge="1" parent="1" source="f-app" target="b-fn">
+        <mxCell id="e2" value="HTTPS fetch /api/chat" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=40;html=1;strokeWidth=2;strokeColor=#2e7d32;fontSize=10;exitX=0.18;exitY=1;exitDx=0;exitDy=0;entryX=0.18;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="swim-front" target="swim-back">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e3" value="OpenAI&#xa;Chat Completions" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#7b1fa2;fontSize=10;" edge="1" parent="1" source="b-fn" target="ai-model">
+        <mxCell id="e3" value="OpenAI Chat Completions" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=40;html=1;strokeWidth=2;strokeColor=#7b1fa2;fontSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="swim-back" target="swim-ai">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#00838f;dashed=1;" edge="1" parent="1" source="ci-actions" target="ci-deploy">
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=40;html=1;strokeWidth=2;strokeColor=#00838f;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ci-gh" target="ci-actions">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e5" value="deploy" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#00838f;dashed=1;fontSize=10;" edge="1" parent="1" source="ci-deploy" target="swim-front">
+        <mxCell id="e4b" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=40;html=1;strokeWidth=2;strokeColor=#00838f;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ci-actions" target="ci-deploy">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4c" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=40;html=1;strokeWidth=2;strokeColor=#00838f;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ci-deploy" target="ci-fbjson">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4d" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=40;html=1;strokeWidth=2;strokeColor=#00838f;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ci-fbjson" target="ci-docs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="deploy" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=40;html=1;strokeWidth=2;strokeColor=#00838f;dashed=1;fontSize=10;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.85;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="swim-cicd" target="swim-front">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1585" y="790" />
+              <mxPoint x="1585" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" value="deploy functions" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=40;html=1;strokeWidth=2;strokeColor=#00838f;dashed=1;fontSize=10;exitX=0.2;exitY=0;exitDx=0;exitDy=0;entryX=0.2;entryY=1;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="swim-cicd" target="swim-back">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="120" y="700" />
+            </Array>
+          </mxGeometry>
         </mxCell>
 
         <mxCell id="legend" value="Leyenda rápida: Azul=clientes · Amarillo=frontend · Verde=backend Firebase · Morado=OpenAI · Cyan=CI/CD · Rojo=secretos" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=11;fontColor=#455a64;" vertex="1" parent="1">
@@ -182,16 +203,28 @@
           <mxGeometry x="980" y="420" width="240" height="180" as="geometry" />
         </mxCell>
 
-        <mxCell id="a1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#1565c0;endArrow=block;" edge="1" parent="1" source="s1" target="s2"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="a2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#f9a825;endArrow=block;" edge="1" parent="1" source="s2" target="s3"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="a3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#00695c;endArrow=block;" edge="1" parent="1" source="s3" target="s4"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="a4" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#2e7d32;endArrow=block;" edge="1" parent="1" source="s4" target="s5"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="a5" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#2e7d32;endArrow=block;" edge="1" parent="1" source="s5" target="s6"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="a6" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#2e7d32;endArrow=block;" edge="1" parent="1" source="s6" target="s7"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1085" y="230"/><mxPoint x="150" y="230"/></Array></mxGeometry></mxCell>
-        <mxCell id="a7" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#7b1fa2;endArrow=block;" edge="1" parent="1" source="s7" target="s8"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="a8" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#7b1fa2;endArrow=block;" edge="1" parent="1" source="s8" target="s9"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="a9" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#2e7d32;endArrow=block;" edge="1" parent="1" source="s9" target="s10"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="a10" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#f9a825;endArrow=block;" edge="1" parent="1" source="s10" target="s11"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <!-- Fila 1: flechas horizontales cortas, sin cruce -->
+        <mxCell id="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#1565c0;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="s1" target="s2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#f9a825;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="s2" target="s3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#00695c;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="s3" target="s4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#2e7d32;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="s4" target="s5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#2e7d32;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="s5" target="s6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <!-- Baja por la DERECHA y entra a la fila 2 por la izquierda, corredor y=220 (no cruza cajas) -->
+        <mxCell id="a6" value="↓ continúa" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#2e7d32;endArrow=block;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=10;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="s6" target="s7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1085" y="210" />
+              <mxPoint x="1280" y="210" />
+              <mxPoint x="1280" y="240" />
+              <mxPoint x="150" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <!-- Fila 2: horizontales -->
+        <mxCell id="a7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#7b1fa2;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="s7" target="s8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#7b1fa2;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="s8" target="s9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#2e7d32;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="s9" target="s10"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#f9a825;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="s10" target="s11"><mxGeometry relative="1" as="geometry" /></mxCell>
       </root>
     </mxGraphModel>
   </diagram>
@@ -231,6 +264,11 @@
         <mxCell id="stt-note" value="iOS: requiere Safari iOS 14.5+ y permiso de Micrófono en Ajustes → Safari.&#xa;Android: Chrome con permiso de micrófono. Errores not-allowed / no-speech se muestran en UI." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#ff8f00;align=left;fontSize=11;" vertex="1" parent="stt-lane">
           <mxGeometry x="40" y="170" width="1110" height="70" as="geometry" />
         </mxCell>
+        <mxCell id="stte1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#ef6c00;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="stt-lane" source="stt1" target="stt2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="stte2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#ef6c00;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="stt-lane" source="stt2" target="stt3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="stte3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#ef6c00;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="stt-lane" source="stt3" target="stt4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="stte4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#ef6c00;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="stt-lane" source="stt4" target="stt5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="stte5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#ef6c00;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="stt-lane" source="stt5" target="stt6"><mxGeometry relative="1" as="geometry" /></mxCell>
 
         <!-- TTS -->
         <mxCell id="tts-lane" value="HABLAR — Text-to-Speech (TTS)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontStyle=1;fontSize=14;startSize=36;" vertex="1" parent="1">
@@ -254,6 +292,26 @@
         <mxCell id="tts-note" value="Claves iOS:&#xa;1) Safari bloquea TTS sin gesto del usuario → unlock en primer touch/click o al tocar micrófono.&#xa;2) Tras await fetch, el auto-speak puede no sonar → botón Escuchar fuerza reproducción con gesto.&#xa;3) Hack pause()/resume() tras speak() para despertar el motor de voz en iPhone.&#xa;4) No buscar voces con nombre &quot;female&quot; (falla en iOS); se eligen Paulina, Mónica, Sabina, etc." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1976d2;align=left;fontSize=11;" vertex="1" parent="tts-lane">
           <mxGeometry x="40" y="160" width="1060" height="110" as="geometry" />
         </mxCell>
+        <mxCell id="ttse1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#1565c0;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="tts-lane" source="tts1" target="tts2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ttse2" value="sí" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#1565c0;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;labelBackgroundColor=#ffffff;" edge="1" parent="tts-lane" source="tts2" target="tts3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ttse3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#ef6c00;endArrow=block;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=1;fontSize=10;labelBackgroundColor=#ffffff;" edge="1" parent="tts-lane" source="tts2" target="tts4">
+          <mxGeometry relative="1" as="geometry" x="0.2" y="20">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="320" y="155" />
+              <mxPoint x="770" y="155" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ttse3l" value="fallback iOS" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;labelBackgroundColor=#ffffff;" vertex="1" connectable="0" parent="ttse3">
+          <mxGeometry x="-0.1" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="ttse4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#1565c0;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="tts-lane" source="tts3" target="tts5"><mxGeometry relative="1" as="geometry">
+          <Array as="points">
+            <mxPoint x="860" y="95" />
+          </Array>
+        </mxGeometry></mxCell>
+        <mxCell id="ttse5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#ef6c00;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.35;" edge="1" parent="tts-lane" source="tts4" target="tts5"><mxGeometry relative="1" as="geometry" /></mxCell>
 
         <mxCell id="comp" value="Comparativa rápida&#xa;&#xa;iOS Safari: unlock + permiso mic + botón Escuchar&#xa;Android Chrome: STT/TTS más permisivos, mismo código&#xa;Desktop: funciona con click; Chrome tiene buen STT" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#616161;align=left;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="40" y="720" width="640" height="120" as="geometry" />
@@ -296,6 +354,17 @@
         </mxCell>
         <mxCell id="p5" value="Producción actualizada&#xa;Hosting + Function api&#xa;Node.js 22 · us-central1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b2dfdb;strokeColor=#00695c;fontSize=11;fontStyle=1;" vertex="1" parent="pipe">
           <mxGeometry x="180" y="170" width="320" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pe1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#00838f;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="pipe" source="p1" target="p2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="pe2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#00838f;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="pipe" source="p2" target="p3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="pe3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#00838f;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="pipe" source="p3" target="p4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="pe4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#00695c;endArrow=block;exitX=0.5;exitY=1;entryX=0.85;entryY=0;" edge="1" parent="pipe" source="p3" target="p5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="415" y="150" />
+              <mxPoint x="452" y="150" />
+            </Array>
+          </mxGeometry>
         </mxCell>
 
         <mxCell id="tech" value="Stack tecnológico (producción)&#xa;&#xa;• Frontend: HTML/CSS/JS vanilla (public/)&#xa;• Backend: Express en Firebase Functions v1 HTTPS&#xa;• Runtime: Node.js 22&#xa;• IA: OpenAI gpt-6.1-sol&#xa;• Hosting/CDN: Firebase Hosting&#xa;• CI: GitHub Actions&#xa;• Voz: Web Speech API (STT + TTS)&#xa;• Docs API: OpenAPI/Swagger&#xa;• Región: us-central1&#xa;• Proyecto GCP/Firebase: asistenteia-185c4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;align=left;fontSize=12;spacingLeft=8;" vertex="1" parent="1">
