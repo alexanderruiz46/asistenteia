@@ -1,0 +1,311 @@
+<mxfile host="app.diagrams.net" agent="Aloxter" version="22.1.0" type="device">
+  <diagram id="arquitectura-general" name="1. Arquitectura General">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Aloxter — Arquitectura completa del proyecto AsistenteIA&#xa;Proyecto: asistenteia-185c4 | Repo: github.com/alexanderruiz46/asistenteia | Autor: Alexander Ruiz" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontStyle=1;fontSize=18;fontColor=#1a237e;" vertex="1" parent="1">
+          <mxGeometry x="80" y="20" width="1440" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- CLIENTES -->
+        <mxCell id="swim-client" value="Clientes" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontStyle=1;fontSize=14;startSize=32;" vertex="1" parent="1">
+          <mxGeometry x="40" y="90" width="1520" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c-ios" value="📱 iPhone / iPad&#xa;Safari (WebKit)&#xa;STT + TTS con unlock" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#ef6c00;fontSize=12;" vertex="1" parent="swim-client">
+          <mxGeometry x="60" y="45" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c-android" value="📱 Android&#xa;Chrome&#xa;STT + TTS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=12;" vertex="1" parent="swim-client">
+          <mxGeometry x="300" y="45" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c-desktop" value="💻 Desktop&#xa;Chrome / Firefox / Edge&#xa;Chat + Voz" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#7b1fa2;fontSize=12;" vertex="1" parent="swim-client">
+          <mxGeometry x="540" y="45" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c-apis" value="🔌 Consumidores API&#xa;Swagger UI / curl / terceros&#xa;POST /chat · GET /health" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#546e7a;fontSize=12;" vertex="1" parent="swim-client">
+          <mxGeometry x="780" y="45" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c-url" value="URL pública&#xa;https://asistenteia-185c4.web.app" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#1565c0;fontSize=12;fontStyle=1;" vertex="1" parent="swim-client">
+          <mxGeometry x="1040" y="45" width="260" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- FRONTEND -->
+        <mxCell id="swim-front" value="Frontend (Firebase Hosting → carpeta public/)" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#f9a825;fontStyle=1;fontSize=14;startSize=32;" vertex="1" parent="1">
+          <mxGeometry x="40" y="250" width="1520" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="f-html" value="index.html&#xa;UI chat Aloxter&#xa;Botones mic + enviar&#xa;Footer © 2026" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#f9a825;fontSize=11;" vertex="1" parent="swim-front">
+          <mxGeometry x="50" y="50" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="f-app" value="app.js&#xa;• Fetch API /chat&#xa;• Render mensajes&#xa;• Botón Escuchar&#xa;• Init VoiceAssistant&#xa;• Verificar /health" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#f9a825;fontSize=11;" vertex="1" parent="swim-front">
+          <mxGeometry x="240" y="50" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="f-voice" value="voice.js&#xa;• SpeechRecognition&#xa;• speechSynthesis&#xa;• Unlock iOS&#xa;• Permiso micrófono&#xa;• Voces es-*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ef6c00;fontSize=11;fontStyle=1;" vertex="1" parent="swim-front">
+          <mxGeometry x="450" y="50" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="f-css" value="styles.css&#xa;UI responsiva&#xa;móvil iOS/Android" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#f9a825;fontSize=11;" vertex="1" parent="swim-front">
+          <mxGeometry x="660" y="50" width="140" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="f-swagger" value="swagger.yaml&#xa;+ swagger-ui.html&#xa;Documentación OpenAPI" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#f9a825;fontSize=11;" vertex="1" parent="swim-front">
+          <mxGeometry x="830" y="50" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="f-assets" value="Assets&#xa;favicon, manifest&#xa;logos PWA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#f9a825;fontSize=11;" vertex="1" parent="swim-front">
+          <mxGeometry x="1020" y="50" width="140" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="f-note" value="Nota: src/ (React CRA) existe pero el producto en producción&#xa;se sirve desde public/ estático en Firebase Hosting." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffde7;strokeColor=#fbc02d;fontSize=10;align=left;" vertex="1" parent="swim-front">
+          <mxGeometry x="1190" y="50" width="300" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- BACKEND -->
+        <mxCell id="swim-back" value="Backend — Firebase Cloud Functions (Node.js 22, región us-central1)" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontStyle=1;fontSize=14;startSize=32;" vertex="1" parent="1">
+          <mxGeometry x="40" y="470" width="1000" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="b-fn" value="functions/index.js&#xa;Cloud Function: api&#xa;(Express onRequest)&#xa;&#xa;Middleware: cors + json&#xa;&#xa;GET /health&#xa;POST /chat" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2e7d32;fontSize=11;fontStyle=1;" vertex="1" parent="swim-back">
+          <mxGeometry x="50" y="45" width="220" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="b-cfg" value="config/asistente.js&#xa;&#xa;model: gpt-6.1-sol&#xa;version: 1.1.0&#xa;maxTokens: 2000&#xa;reasoningEffort: low&#xa;systemPrompt Aloxter&#xa;(solo tech/programming)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2e7d32;fontSize=11;" vertex="1" parent="swim-back">
+          <mxGeometry x="300" y="45" width="220" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="b-utils" value="utils/textUtils.js&#xa;&#xa;normalizeText()&#xa;Mapea acentos/ñ&#xa;y caracteres especiales&#xa;a ASCII seguro" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2e7d32;fontSize=11;" vertex="1" parent="swim-back">
+          <mxGeometry x="550" y="45" width="180" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="b-secret" value="Firebase Config&#xa;functions.config()&#xa;&#xa;openai.key&#xa;(secreto, no en repo)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffebee;strokeColor=#c62828;fontSize=11;" vertex="1" parent="swim-back">
+          <mxGeometry x="760" y="45" width="200" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- OPENAI -->
+        <mxCell id="swim-ai" value="OpenAI API" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#7b1fa2;fontStyle=1;fontSize=14;startSize=32;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="470" width="500" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="ai-model" value="Modelo: gpt-6.1-sol&#xa;(familia GPT-6.1)&#xa;&#xa;Chat Completions&#xa;max_completion_tokens&#xa;reasoning_effort: low&#xa;&#xa;Billing Pay-as-you-go&#xa;Créditos requeridos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#7b1fa2;fontSize=12;fontStyle=1;" vertex="1" parent="swim-ai">
+          <mxGeometry x="50" y="45" width="220" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="ai-sdk" value="SDK: openai (npm)&#xa;en Cloud Function&#xa;&#xa;system + user messages&#xa;→ respuesta JSON&#xa;{response, model, version}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#7b1fa2;fontSize=11;" vertex="1" parent="swim-ai">
+          <mxGeometry x="290" y="45" width="180" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- CI/CD -->
+        <mxCell id="swim-cicd" value="CI/CD &amp; Repo" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=#e0f7fa;strokeColor=#00838f;fontStyle=1;fontSize=14;startSize=32;" vertex="1" parent="1">
+          <mxGeometry x="40" y="710" width="1520" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ci-gh" value="GitHub&#xa;alexanderruiz46/asistenteia&#xa;branch: main" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#00838f;fontSize=11;" vertex="1" parent="swim-cicd">
+          <mxGeometry x="50" y="40" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ci-actions" value="GitHub Actions&#xa;firebase-deploy.yml&#xa;Node 22 · push main&#xa;secret: FIREBASE_TOKEN" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#00838f;fontSize=11;" vertex="1" parent="swim-cicd">
+          <mxGeometry x="290" y="40" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ci-deploy" value="firebase deploy&#xa;--only hosting,functions&#xa;+ verify /health + web.app" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#00838f;fontSize=11;" vertex="1" parent="swim-cicd">
+          <mxGeometry x="550" y="40" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ci-fbjson" value="firebase.json&#xa;Hosting rewrites /api/** → api&#xa;runtime nodejs22&#xa;CORS headers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#00838f;fontSize=11;" vertex="1" parent="swim-cicd">
+          <mxGeometry x="810" y="40" width="240" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ci-docs" value="docs/&#xa;arquitectura-aloxter.drawio&#xa;(este diagrama)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#00838f;fontSize=11;" vertex="1" parent="swim-cicd">
+          <mxGeometry x="1090" y="40" width="200" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- FLECHAS PRINCIPALES -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1565c0;" edge="1" parent="1" source="c-url" target="f-html">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="HTTPS fetch&#xa;/api/chat" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2e7d32;fontSize=10;" edge="1" parent="1" source="f-app" target="b-fn">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="OpenAI&#xa;Chat Completions" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#7b1fa2;fontSize=10;" edge="1" parent="1" source="b-fn" target="ai-model">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#00838f;dashed=1;" edge="1" parent="1" source="ci-actions" target="ci-deploy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="deploy" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#00838f;dashed=1;fontSize=10;" edge="1" parent="1" source="ci-deploy" target="swim-front">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend" value="Leyenda rápida: Azul=clientes · Amarillo=frontend · Verde=backend Firebase · Morado=OpenAI · Cyan=CI/CD · Rojo=secretos" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=11;fontColor=#455a64;" vertex="1" parent="1">
+          <mxGeometry x="40" y="890" width="1520" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="flujo-chat" name="2. Flujo Chat (request/response)">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="t2" value="Flujo de una pregunta de chat — de punta a punta" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=18;fontColor=#1a237e;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1320" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s1" value="1. Usuario&#xa;Escribe o dicta&#xa;mensaje" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="100" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" value="2. index.html&#xa;form #chat-form&#xa;submit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#f9a825;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="240" y="100" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" value="3. app.js&#xa;enviarMensaje()&#xa;POST JSON&#xa;{ message }" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#f9a825;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="420" y="100" width="150" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" value="4. Firebase Hosting&#xa;rewrite /api/**&#xa;→ function api&#xa;o URL directa CF" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e0f2f1;strokeColor=#00695c;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="610" y="100" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="s5" value="5. Cloud Function&#xa;Express POST /chat&#xa;valida body.message" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="810" y="100" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="s6" value="6. normalizeText()&#xa;limpia acentos/ñ&#xa;textUtils.js" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="100" width="150" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s7" value="7. ASISTENTE_CONFIG&#xa;systemPrompt + model&#xa;gpt-6.1-sol&#xa;reasoning low" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="260" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="s8" value="8. OpenAI SDK&#xa;chat.completions.create&#xa;apiKey desde&#xa;config().openai.key" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#7b1fa2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="280" y="260" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="s9" value="9. OpenAI API&#xa;genera respuesta&#xa;especializada en tech" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#7b1fa2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="520" y="260" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="s10" value="10. Response JSON&#xa;{ response, model,&#xa;version: 1.1.0 }" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="740" y="260" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="s11" value="11. app.js UI&#xa;pinta bot-message&#xa;+ botón Escuchar&#xa;+ speak() TTS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#f9a825;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="960" y="260" width="180" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="err" value="Errores posibles&#xa;• 400 sin message&#xa;• 429 sin créditos OpenAI&#xa;• 500 error interno / modelo&#xa;• CORS (mitigado en hosting + cors())" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffebee;strokeColor=#c62828;align=left;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="420" width="320" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="urls" value="Endpoints producción&#xa;&#xa;API Function:&#xa;https://us-central1-asistenteia-185c4.cloudfunctions.net/api&#xa;&#xa;GET  /health&#xa;POST /chat&#xa;&#xa;Hosting: https://asistenteia-185c4.web.app&#xa;app.js usa API_URL → cloudfunctions.net/api" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#546e7a;align=left;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="420" y="420" width="520" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="payload" value="Ejemplo request&#xa;&#xa;POST /chat&#xa;{&quot;message&quot;:&quot;¿Qué es JS?&quot;}&#xa;&#xa;Ejemplo response&#xa;{&quot;response&quot;:&quot;...&quot;,&#xa; &quot;model&quot;:&quot;gpt-6.1-sol&quot;,&#xa; &quot;version&quot;:&quot;1.1.0&quot;}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#455a64;align=left;fontSize=11;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="980" y="420" width="240" height="180" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#1565c0;endArrow=block;" edge="1" parent="1" source="s1" target="s2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#f9a825;endArrow=block;" edge="1" parent="1" source="s2" target="s3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#00695c;endArrow=block;" edge="1" parent="1" source="s3" target="s4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a4" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#2e7d32;endArrow=block;" edge="1" parent="1" source="s4" target="s5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a5" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#2e7d32;endArrow=block;" edge="1" parent="1" source="s5" target="s6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a6" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#2e7d32;endArrow=block;" edge="1" parent="1" source="s6" target="s7"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1085" y="230"/><mxPoint x="150" y="230"/></Array></mxGeometry></mxCell>
+        <mxCell id="a7" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#7b1fa2;endArrow=block;" edge="1" parent="1" source="s7" target="s8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a8" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#7b1fa2;endArrow=block;" edge="1" parent="1" source="s8" target="s9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a9" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#2e7d32;endArrow=block;" edge="1" parent="1" source="s9" target="s10"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a10" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#f9a825;endArrow=block;" edge="1" parent="1" source="s10" target="s11"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="flujo-voz" name="3. Flujo Voz iOS/Android">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="tv" value="Módulo de voz (voice.js) — escuchar y hablar en iOS y Android" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=18;fontColor=#e65100;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1320" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- STT -->
+        <mxCell id="stt-lane" value="ESCUCHAR — Speech-to-Text (STT)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#ef6c00;fontStyle=1;fontSize=14;startSize=36;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="1320" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="stt1" value="Tap micrófono&#xa;#voice-input-btn&#xa;(gesto usuario)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ef6c00;fontSize=11;" vertex="1" parent="stt-lane">
+          <mxGeometry x="40" y="60" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="stt2" value="unlockAudio()&#xa;Desbloquea TTS&#xa;(crítico iOS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#e65100;fontSize=11;fontStyle=1;" vertex="1" parent="stt-lane">
+          <mxGeometry x="220" y="60" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="stt3" value="getUserMedia&#xa;permiso micrófono&#xa;Ajustes iOS Safari" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ef6c00;fontSize=11;" vertex="1" parent="stt-lane">
+          <mxGeometry x="400" y="60" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="stt4" value="SpeechRecognition&#xa;o webkitSpeechRecognition&#xa;lang: es-*&#xa;interimResults: true" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ef6c00;fontSize=11;" vertex="1" parent="stt-lane">
+          <mxGeometry x="590" y="60" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="stt5" value="onresult&#xa;transcript →&#xa;#user-input" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ef6c00;fontSize=11;" vertex="1" parent="stt-lane">
+          <mxGeometry x="820" y="60" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="stt6" value="requestSubmit()&#xa;envía chat&#xa;como texto" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ef6c00;fontSize=11;" vertex="1" parent="stt-lane">
+          <mxGeometry x="1000" y="60" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="stt-note" value="iOS: requiere Safari iOS 14.5+ y permiso de Micrófono en Ajustes → Safari.&#xa;Android: Chrome con permiso de micrófono. Errores not-allowed / no-speech se muestran en UI." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#ff8f00;align=left;fontSize=11;" vertex="1" parent="stt-lane">
+          <mxGeometry x="40" y="170" width="1110" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- TTS -->
+        <mxCell id="tts-lane" value="HABLAR — Text-to-Speech (TTS)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;fontStyle=1;fontSize=14;startSize=36;" vertex="1" parent="1">
+          <mxGeometry x="40" y="390" width="1320" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="tts1" value="Respuesta del bot&#xa;llega a app.js" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#1565c0;fontSize=11;" vertex="1" parent="tts-lane">
+          <mxGeometry x="40" y="60" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="tts2" value="¿audioUnlocked?&#xa;Si NO → pendingSpeak&#xa;(típico tras fetch iOS)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#bbdefb;strokeColor=#1565c0;fontSize=11;" vertex="1" parent="tts-lane">
+          <mxGeometry x="230" y="45" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="tts3" value="Auto speak()&#xa;primera oración&#xa;+ pause/resume iOS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#1565c0;fontSize=11;" vertex="1" parent="tts-lane">
+          <mxGeometry x="460" y="60" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="tts4" value="Botón Escuchar&#xa;speakFromUserGesture()&#xa;fallback iPhone" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#e65100;fontSize=11;fontStyle=1;" vertex="1" parent="tts-lane">
+          <mxGeometry x="680" y="60" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="tts5" value="speechSynthesis&#xa;SpeechSynthesisUtterance&#xa;voz es (Paulina/Mónica/…)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#1565c0;fontSize=11;" vertex="1" parent="tts-lane">
+          <mxGeometry x="900" y="60" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="tts-note" value="Claves iOS:&#xa;1) Safari bloquea TTS sin gesto del usuario → unlock en primer touch/click o al tocar micrófono.&#xa;2) Tras await fetch, el auto-speak puede no sonar → botón Escuchar fuerza reproducción con gesto.&#xa;3) Hack pause()/resume() tras speak() para despertar el motor de voz en iPhone.&#xa;4) No buscar voces con nombre &quot;female&quot; (falla en iOS); se eligen Paulina, Mónica, Sabina, etc." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1976d2;align=left;fontSize=11;" vertex="1" parent="tts-lane">
+          <mxGeometry x="40" y="160" width="1060" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="comp" value="Comparativa rápida&#xa;&#xa;iOS Safari: unlock + permiso mic + botón Escuchar&#xa;Android Chrome: STT/TTS más permisivos, mismo código&#xa;Desktop: funciona con click; Chrome tiene buen STT" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#616161;align=left;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="720" width="640" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="files-v" value="Archivos involucrados&#xa;&#xa;public/voice.js — clase VoiceAssistant&#xa;public/app.js — init + speak + botón Escuchar&#xa;public/index.html — mic UI + carga scripts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#f9a825;align=left;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="720" y="720" width="640" height="120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="estructura-repo" name="4. Estructura Repo + CI/CD">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="tr" value="Estructura del repositorio y pipeline de despliegue" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=18;fontColor=#00695c;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1320" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tree" value="asistenteia/&#xa;├── public/                 ← Firebase Hosting (app real)&#xa;│   ├── index.html&#xa;│   ├── app.js&#xa;│   ├── voice.js&#xa;│   ├── styles.css&#xa;│   ├── swagger.yaml / swagger-ui.html&#xa;│   └── assets (favicon, manifest)&#xa;├── functions/              ← Cloud Functions Node 22&#xa;│   ├── index.js            ← Express api (health + chat)&#xa;│   ├── config/asistente.js ← modelo + systemPrompt&#xa;│   ├── utils/textUtils.js  ← normalizeText&#xa;│   └── package.json&#xa;├── src/                    ← plantilla React (no es el hosting actual)&#xa;├── docs/&#xa;│   └── arquitectura-aloxter.drawio&#xa;├── .github/workflows/&#xa;│   └── firebase-deploy.yml&#xa;├── firebase.json&#xa;├── .firebaserc             ← project asistenteia-185c4&#xa;└── README.md" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#455a64;align=left;fontFamily=Courier New;fontSize=11;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="520" height="420" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pipe" value="Pipeline CI/CD" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e0f7fa;strokeColor=#00838f;fontStyle=1;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="600" y="80" width="720" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="p1" value="git push main&#xa;GitHub" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#00838f;fontSize=11;" vertex="1" parent="pipe">
+          <mxGeometry x="30" y="60" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="p2" value="Actions&#xa;checkout&#xa;Node 22&#xa;npm install" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#00838f;fontSize=11;" vertex="1" parent="pipe">
+          <mxGeometry x="180" y="60" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="p3" value="firebase deploy&#xa;hosting + functions&#xa;FIREBASE_TOKEN&#xa;--force" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#00838f;fontSize=11;" vertex="1" parent="pipe">
+          <mxGeometry x="340" y="60" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="p4" value="Verify&#xa;/api/health&#xa;+ web.app HTML" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#00838f;fontSize=11;" vertex="1" parent="pipe">
+          <mxGeometry x="520" y="60" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="p5" value="Producción actualizada&#xa;Hosting + Function api&#xa;Node.js 22 · us-central1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b2dfdb;strokeColor=#00695c;fontSize=11;fontStyle=1;" vertex="1" parent="pipe">
+          <mxGeometry x="180" y="170" width="320" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tech" value="Stack tecnológico (producción)&#xa;&#xa;• Frontend: HTML/CSS/JS vanilla (public/)&#xa;• Backend: Express en Firebase Functions v1 HTTPS&#xa;• Runtime: Node.js 22&#xa;• IA: OpenAI gpt-6.1-sol&#xa;• Hosting/CDN: Firebase Hosting&#xa;• CI: GitHub Actions&#xa;• Voz: Web Speech API (STT + TTS)&#xa;• Docs API: OpenAPI/Swagger&#xa;• Región: us-central1&#xa;• Proyecto GCP/Firebase: asistenteia-185c4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;align=left;fontSize=12;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="600" y="390" width="720" height="250" as="geometry" />
+        </mxCell>
+
+        <mxCell id="talk" value="Guion sugerido para explicar mañana (5–7 min)&#xa;&#xa;1) Qué es Aloxter: asistente web de tech/programming.&#xa;2) Diagrama 1: clientes → Hosting → Functions → OpenAI.&#xa;3) Diagrama 2: recorrido de un mensaje /chat.&#xa;4) Diagrama 3: por qué iOS necesita unlock + botón Escuchar.&#xa;5) Diagrama 4: repo + Actions despliega solo.&#xa;6) Demo: web.app → pregunta → respuesta GPT-6.1 Sol → Escuchar." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#ef6c00;align=left;fontSize=12;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="530" width="520" height="220" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
