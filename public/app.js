@@ -166,22 +166,42 @@ chatForm.addEventListener('submit', async (e) => {
         // Mostrar respuesta
         const botMessage = document.createElement('div');
         botMessage.className = 'bot-message';
+        const safeText = String(respuesta.text || '');
         botMessage.innerHTML = `
-            ${respuesta.text}
+            <div class="bot-text"></div>
+            <div class="voice-actions">
+                <button type="button" class="speak-response-btn" title="Escuchar respuesta" aria-label="Escuchar respuesta">
+                    <i class="fas fa-volume-up"></i>
+                    <span>Escuchar</span>
+                </button>
+            </div>
             <div class="model-info">
                 <small>Modelo: ${respuesta.model} | Versión: ${respuesta.version}</small>
             </div>
         `;
+        botMessage.querySelector('.bot-text').textContent = safeText;
         chatBox.appendChild(botMessage);
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        // Reproducir la respuesta con voz
+        const speakBtn = botMessage.querySelector('.speak-response-btn');
+        if (speakBtn) {
+            let speakLock = false;
+            const play = (event) => {
+                event.preventDefault();
+                if (speakLock) return;
+                speakLock = true;
+                setTimeout(() => { speakLock = false; }, 450);
+                if (window.voiceAssistant) {
+                    window.voiceAssistant.speakFromUserGesture(safeText);
+                }
+            };
+            speakBtn.addEventListener('click', play);
+            speakBtn.addEventListener('touchend', play, { passive: false });
+        }
+
+        // Auto-voz: en iOS solo funciona si el audio ya se desbloqueó (p. ej. al usar el mic)
         if (window.voiceAssistant) {
-            // Dividir la respuesta en oraciones para una mejor pronunciación
-            const sentences = respuesta.text.split(/[.!?]+/).filter(s => s.trim().length > 0);
-            sentences.forEach(sentence => {
-                window.voiceAssistant.speak(sentence.trim());
-            });
+            window.voiceAssistant.speak(safeText);
         }
 
         mostrarExito('Mensaje enviado correctamente');
@@ -229,11 +249,22 @@ userInput.addEventListener('keypress', (e) => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    const voiceScript = document.createElement('script');
-    voiceScript.src = 'voice.js';
-    document.head.appendChild(voiceScript);
-    voiceScript.onload = () => {
-        window.voiceAssistant = new VoiceAssistant();
+function initVoiceAssistant() {
+    if (window.voiceAssistant || typeof VoiceAssistant === 'undefined') return;
+    window.voiceAssistant = new VoiceAssistant();
+
+    // Desbloquear audio en el primer toque/clic de la página (crítico en iOS)
+    const unlockOnce = () => {
+        if (window.voiceAssistant) window.voiceAssistant.unlockAudio();
+        document.removeEventListener('touchstart', unlockOnce);
+        document.removeEventListener('click', unlockOnce);
     };
-}); 
+    document.addEventListener('touchstart', unlockOnce, { once: true, passive: true });
+    document.addEventListener('click', unlockOnce, { once: true });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVoiceAssistant);
+} else {
+    initVoiceAssistant();
+} 

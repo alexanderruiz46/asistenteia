@@ -93,6 +93,41 @@
         font-size: 0.9em;
       }
 
+      .voice-button {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        min-width: 44px;
+        min-height: 44px;
+      }
+
+      .voice-button.voice-unsupported {
+        opacity: 0.45;
+      }
+
+      .voice-actions {
+        margin-top: 10px;
+      }
+
+      .speak-response-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        background: #e3f2fd;
+        color: #1565c0;
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        min-height: 40px;
+      }
+
+      .speak-response-btn:active {
+        background: #bbdefb;
+      }
+
       .recording-indicator {
         width: 12px;
         height: 12px;
@@ -218,6 +253,7 @@
       </div>
     </footer>
 
+    <script src="voice.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
